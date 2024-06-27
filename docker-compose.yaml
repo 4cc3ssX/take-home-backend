@@ -1,13 +1,24 @@
 services:
   chat-app:
     container_name: chat-app
-    image: chat-app
+    image: ryam47/chat-app:0.0.1
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+      - PORT=3000
     ports:
       - '3000:3000'
     depends_on:
       - rabbitmq
+    networks:
+      - take-home-network
   rabbitmq:
     image: 'rabbitmq:latest'
     ports:
       - '5672:5672'
       - '15672:15672'
+    networks:
+      take-home-network:
+        aliases:
+          - rabbitmq
+networks:
+  take-home-network:
