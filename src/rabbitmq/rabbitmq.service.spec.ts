@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RabbitMQService } from './rabbitmq.service';
 import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
 import { of } from 'rxjs';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import configuration, { Config } from 'src/config/configuration';
 
 describe('RabbitmqService', () => {
   let service: RabbitMQService;
@@ -10,17 +12,21 @@ describe('RabbitmqService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        ClientsModule.register([
+        ClientsModule.registerAsync([
           {
             name: 'RABBITMQ_SERVICE',
-            transport: Transport.RMQ,
-            options: {
-              urls: ['amqp://localhost:5672'],
-              queue: 'chat_queue',
-              queueOptions: {
-                durable: false,
+            imports: [ConfigModule.forRoot({ load: [configuration] })],
+            inject: [ConfigService],
+            useFactory: async (configService: ConfigService<Config>) => ({
+              transport: Transport.RMQ,
+              options: {
+                urls: [configService.get<string>('RABBITMQ_URL')],
+                queue: 'chat_queue',
+                queueOptions: {
+                  durable: false,
+                },
               },
-            },
+            }),
           },
         ]),
       ],
