@@ -1,8 +1,7 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  chat-app:
+    container_name: chat-app
+    image: chat-app
     ports:
       - '3000:3000'
     depends_on:
