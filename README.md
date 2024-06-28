@@ -25,7 +25,8 @@ yarn install
 To build and run the Docker containers:
 1. Build the Docker Image
 	```bash
-	docker build -t ryam47/chat-app:0.0.1 .```
+	docker build -t ryam47/chat-app:0.0.1 .
+ ```
 2. Run the Docker Containers
 	```bash
 	docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:latest
