@@ -11,12 +11,12 @@ Before you begin, ensure you have the following installed on your machine:
 
 ## Setup
 ### Clone the Repository
-```bash
+```sh
 git  clone  https://github.com/4cc3ssX/take-home-backend
 cd  take-home-backend
 ```
 ### Install Dependencies
-```bash
+```sh
 yarn install
 ```
 
@@ -24,32 +24,32 @@ yarn install
 ### Using Docker CLI
 To build and run the Docker containers:
 1. Build the Docker Image
-	```bash
+	```sh
 	docker build -t ryam47/chat-app:0.0.1 .
- ```
+ 	```
 2. Run the Docker Containers
-	```bash
-	docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:latest
+	```sh
+	docker run -d --name rabbitmq -p 5672:5672 rabbitmq:latest
 	docker run -d --name chat-app --link rabbitmq -e RABBITMQ_URL=amqp://rabbitmq:5672 -e PORT=3000 -p 3000:3000 ryam47/chat-app:0.0.1
 	```
 ### Using Docker Compose
 Alternatively, you can use Docker Compose to manage the containers:
 1. Run Docker Compose
-	```bash
+	```sh
 	docker-compose up -d
 	```
 ### Using Terraform
 You can also manage the Docker setup using Terraform:
 1. Initialize Terraform
-	```bash
+	```sh
 	terraform init
 	```
 2. Apply the Terraform Configuration
-	```bash
+	```sh
 	terraform apply
 	```
 #### Testing
 To run tests, you can use the following command:
-```bash
+```sh
 yarn test
 ```
